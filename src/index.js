@@ -9,6 +9,7 @@ import LoadMoreBtn from './js/load-more-btn';
 const refs = {
   searchForm: document.getElementById('search-form'),
   gallery: document.querySelector('.gallery'),
+  scrollToTopBtn: document.querySelector('.scroll-to-top'),
 };
 
 const imagesApiService = new ImagesApiService();
@@ -18,15 +19,12 @@ const lightBox = new SimpleLightbox('.gallery a', {
   captionDelay: 250,
 });
 
-refs.searchForm.addEventListener('submit', onSearch);
-loadMoreBtn.refs.button.addEventListener('click', onLoadMore);
-
 function onSearch(e) {
   e.preventDefault();
 
   imagesApiService.query = e.currentTarget.elements.searchQuery.value.trim();
   if (!imagesApiService.query) {
-    return Notify.info('Please write something');
+    return Notify.info('Please write your search query');
   }
   loadMoreBtn.show();
   clearGallery();
@@ -50,12 +48,11 @@ function fetchImage() {
     loadMoreBtn.show();
     lightBox.refresh();
     const { totalHits } = data;
-    if (refs.gallery.children.length === totalHits) {
-      loadMoreBtn.hide();
-      Notify.failure(
-        "We're sorry, but you've reached the end of search results"
+    if (data.hits.length < 40) {
+      Notify.info(
+        'We are sorry, but you have reached the end of search results.'
       );
-      return;
+      loadMoreBtn.hide();
     }
     if (currentPage === 1) {
       Notify.success(`Hooray we found ${totalHits} images`);
@@ -79,7 +76,7 @@ function renderImages({ hits }) {
         comments,
         downloads,
       }) => {
-        return `<a href="${largeImageURL}"><div class="photo-card">
+        return `<a class="gallery-item" href="${largeImageURL}"><div class="photo-card">
   <img src="${webformatURL}" alt="${tags}" loading="lazy" />
   <div class="info">
     <p class="info-item">
@@ -120,3 +117,22 @@ function onPageScroll() {
     behavior: 'smooth',
   });
 }
+
+function onScrollToTopClick() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  });
+}
+
+window.addEventListener('scroll', () => {
+  if (window.pageYOffset >= 300) {
+    refs.scrollToTopBtn.classList.add('show');
+  } else {
+    refs.scrollToTopBtn.classList.remove('show');
+  }
+});
+
+refs.searchForm.addEventListener('submit', onSearch);
+loadMoreBtn.refs.button.addEventListener('click', onLoadMore);
+refs.scrollToTopBtn.addEventListener('click', onScrollToTopClick);
