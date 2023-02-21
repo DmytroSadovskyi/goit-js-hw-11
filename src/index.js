@@ -19,36 +19,41 @@ const lightBox = new SimpleLightbox('.gallery a', {
   captionDelay: 250,
 });
 
-function onSearch(e) {
+async function onSearch(e) {
   e.preventDefault();
 
-  imagesApiService.query = e.currentTarget.elements.searchQuery.value.trim();
-  if (!imagesApiService.query) {
-    return Notify.info('Please write your search query');
+  try {
+    imagesApiService.query = e.currentTarget.elements.searchQuery.value.trim();
+    if (!imagesApiService.query) {
+      return Notify.info('Please write your search query');
+    }
+    loadMoreBtn.show();
+    clearGallery();
+    imagesApiService.resetPage();
+    await fetchImage();
+    refs.searchForm.reset();
+  } catch (error) {
+    console.log(error.message);
   }
-  loadMoreBtn.show();
-  clearGallery();
-  imagesApiService.resetPage();
-  fetchImage();
-  refs.searchForm.reset();
 }
 
-function fetchImage() {
-  loadMoreBtn.hide();
-  imagesApiService.fetchImages().then(({ data }) => {
+async function fetchImage() {
+  try {
+    loadMoreBtn.hide();
+    const backendResponse = await imagesApiService.fetchImages();
     const currentPage = imagesApiService.page - 1;
-
-    if (data.total === 0) {
+    const imagesArr = backendResponse.data.hits;
+    if (backendResponse.data.total === 0) {
       return Notify.failure(
         'Sorry, there are no images matching your search query. Please try again.'
       );
     }
-    renderImages(data);
+    renderImages(imagesArr);
     onPageScroll();
     loadMoreBtn.show();
     lightBox.refresh();
-    const { totalHits } = data;
-    if (data.hits.length < 40) {
+    const { totalHits } = backendResponse.data;
+    if (imagesArr.length < 40) {
       Notify.info(
         'We are sorry, but you have reached the end of search results.'
       );
@@ -57,15 +62,17 @@ function fetchImage() {
     if (currentPage === 1) {
       Notify.success(`Hooray we found ${totalHits} images`);
     }
-  });
+  } catch (error) {
+    console.log(error.message);
+  }
 }
 
-function onLoadMore() {
-  fetchImage();
+async function onLoadMore() {
+  await fetchImage();
 }
 
-function renderImages({ hits }) {
-  const imagesMarkup = hits
+function renderImages(imagesArr) {
+  const imagesMarkup = imagesArr
     .map(
       ({
         webformatURL,
