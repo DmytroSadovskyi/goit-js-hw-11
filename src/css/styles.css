@@ -31,6 +31,7 @@ p {
   cursor: pointer;
   border: none;
   width: 40px;
+  background-color: gainsboro;
 }
 
 .gallery {
@@ -111,8 +112,8 @@ a {
 }
 
 .scroll-to-top {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   opacity: 0;
   border: none;
   border-radius: 50%;
