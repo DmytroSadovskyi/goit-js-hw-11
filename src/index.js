@@ -5,6 +5,7 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 
 import ImagesApiService from './js/api-service';
 import LoadMoreBtn from './js/load-more-btn';
+import createImageCardMarkup from './js/createImageCardMarkup';
 
 const refs = {
   searchForm: document.getElementById('search-form'),
@@ -72,43 +73,10 @@ async function onLoadMore() {
 }
 
 function renderImages(imagesArr) {
-  const imagesMarkup = imagesArr
-    .map(
-      ({
-        webformatURL,
-        largeImageURL,
-        tags,
-        likes,
-        views,
-        comments,
-        downloads,
-      }) => {
-        return `<a class="gallery-item" href="${largeImageURL}"><div class="photo-card">
-  <img src="${webformatURL}" alt="${tags}" loading="lazy" />
-  <div class="info">
-    <p class="info-item">
-      <b>Likes</b>
-      ${likes}
-    </p>
-    <p class="info-item">
-      <b>Views</b>
-      ${views}
-    </p>
-    <p class="info-item">
-      <b>Comments</b>
-      ${comments}
-    </p>
-    <p class="info-item">
-      <b>Downloads</b>
-      ${downloads}
-    </p>
-  </div>
-</div></a>`;
-      }
-    )
-    .join('');
-
-  refs.gallery.insertAdjacentHTML('beforeend', imagesMarkup);
+  refs.gallery.insertAdjacentHTML(
+    'beforeend',
+    createImageCardMarkup(imagesArr)
+  );
 }
 
 function clearGallery() {
