@@ -54,7 +54,9 @@ async function fetchImage() {
     loadMoreBtn.show();
     lightBox.refresh();
     const { totalHits } = backendResponse.data;
-    if (imagesArr.length < 40) {
+    let limit = 40;
+    const totalPages = totalHits / limit;
+    if (currentPage > totalPages) {
       Notify.info(
         'We are sorry, but you have reached the end of search results.'
       );
