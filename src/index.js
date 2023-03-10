@@ -3,9 +3,9 @@ import { Notify } from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
-import ImagesApiService from './js/api-service';
-import LoadMoreBtn from './js/load-more-btn';
-import createImageCardMarkup from './js/createImageCardMarkup';
+import ImagesApiService from './components/api-service';
+import LoadMoreBtn from './components/load-more-btn';
+import createImageCardMarkup from './components/createImageCardMarkup';
 
 const refs = {
   searchForm: document.getElementById('search-form'),
