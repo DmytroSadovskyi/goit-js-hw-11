@@ -43,25 +43,29 @@ async function fetchImage() {
     loadMoreBtn.hide();
     const backendResponse = await imagesApiService.fetchImages();
     const currentPage = imagesApiService.page - 1;
-    const imagesArr = backendResponse.data.hits;
-    if (backendResponse.data.total === 0) {
+    const { total, hits, totalHits } = backendResponse.data;
+
+    if (total === 0) {
       return Notify.failure(
         'Sorry, there are no images matching your search query. Please try again.'
       );
     }
-    renderImages(imagesArr);
+
+    renderImages(hits);
     onPageScroll();
     loadMoreBtn.show();
     lightBox.refresh();
-    const { totalHits } = backendResponse.data;
+
     let limit = 40;
     const totalPages = totalHits / limit;
+
     if (currentPage > totalPages) {
       Notify.info(
         'We are sorry, but you have reached the end of search results.'
       );
       loadMoreBtn.hide();
     }
+
     if (currentPage === 1) {
       Notify.success(`Hooray we found ${totalHits} images`);
     }
@@ -74,11 +78,8 @@ async function onLoadMore() {
   await fetchImage();
 }
 
-function renderImages(imagesArr) {
-  refs.gallery.insertAdjacentHTML(
-    'beforeend',
-    createImageCardMarkup(imagesArr)
-  );
+function renderImages(hits) {
+  refs.gallery.insertAdjacentHTML('beforeend', createImageCardMarkup(hits));
 }
 
 function clearGallery() {
