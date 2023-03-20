@@ -52,7 +52,6 @@ async function fetchImage() {
     }
 
     renderImages(hits);
-    onPageScroll();
     loadMoreBtn.show();
     lightBox.refresh();
 
@@ -76,6 +75,7 @@ async function fetchImage() {
 
 async function onLoadMore() {
   await fetchImage();
+  onPageScroll();
 }
 
 function renderImages(hits) {
