@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Web site for images search" />
     <title>Image finder</title>
     <link rel="stylesheet" href="./css/styles.css" />
   </head>
@@ -16,7 +17,7 @@
           autocomplete="off"
           placeholder="Search images..."
         />
-        <button class="search-form__btn" type="submit">
+        <button class="search-form__btn" type="submit" aria-label="search">
           <i class="fa-solid fa-magnifying-glass"></i>
         </button>
       </form>
@@ -36,7 +37,7 @@
           <!-- Картки зображень -->
         </div>
         <button type="button" class="load-more">Load more</button>
-        <button class="scroll-to-top" type="button">
+        <button class="scroll-to-top" type="button" aria-label="scroll to top">
           <i class="fa fa-angle-up" aria-hidden="true"></i>
         </button>
       </section>
