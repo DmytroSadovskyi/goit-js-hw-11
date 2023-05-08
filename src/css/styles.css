@@ -8,6 +8,14 @@ body {
   color: #ffffff;
 }
 
+.dark-mode .search-form__input {
+  background-color: #0b0a14;
+}
+
+.dark-mode .search-form__input::placeholder {
+  color: #ffffff;
+}
+
 p {
   padding: 0;
   margin: 0;
