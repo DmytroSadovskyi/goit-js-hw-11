@@ -5,6 +5,7 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 import ImagesApiService from './components/api-service';
 import LoadMoreBtn from './components/load-more-btn';
 import createImageCardMarkup from './components/createImageCardMarkup';
+import './components/darkMode';
 
 const refs = {
   searchForm: document.getElementById('search-form'),
