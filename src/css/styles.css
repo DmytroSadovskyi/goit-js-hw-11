@@ -2,12 +2,106 @@ body {
   margin: 0;
   padding: 0;
 }
+
+.dark-mode {
+  background: #0b0a14;
+  color: #ffffff;
+}
+
 p {
   padding: 0;
   margin: 0;
 }
 
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+header {
+  position: relative;
+}
+
+.toggle-container {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+}
+.switch {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  width: 50px;
+  height: 24px;
+  background: #4d4d4d;
+  border-radius: 100px;
+  padding: 0 2px;
+  transition: 0.3s;
+  cursor: pointer;
+  position: relative;
+}
+
+.slider {
+  display: flex;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 100px;
+  transition: 0.3s;
+  border: 1px solid transparent;
+  z-index: 1000;
+}
+
+.icon {
+  display: block;
+  position: absolute;
+  transition: 0.3s;
+}
+
+.sun {
+  left: 2px;
+  opacity: 0;
+}
+
+.moon {
+  right: 2px;
+  opacity: 1;
+}
+
+.switch:hover .slider,
+.switch:focus .slider {
+  border: 1px solid #4d4d4d;
+  box-shadow: 0 0 2px 3px #86d46b;
+}
+
+.switch:active .slider {
+  box-shadow: 0 0 5px 5px #86d46b;
+}
+
+.switch input:checked + .slider {
+  transform: translateX(26px);
+}
+
+.switch input:checked ~ .moon {
+  opacity: 0;
+}
+
+.switch input:checked ~ .sun {
+  opacity: 1;
+}
 .search-form {
+  position: relative;
   display: flex;
   justify-content: center;
   padding: 10px;
