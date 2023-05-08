@@ -5,15 +5,19 @@ body {
 
 .dark-mode {
   background: #0b0a14;
-  color: #ffffff;
 }
 
 .dark-mode .search-form__input {
   background-color: #0b0a14;
+  color: #ffffff;
 }
 
 .dark-mode .search-form__input::placeholder {
   color: #ffffff;
+}
+
+.dark-mode .photo-card {
+  background-color: gainsboro;
 }
 
 p {
