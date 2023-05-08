@@ -2,12 +2,10 @@ import './css/styles.css';
 import { Notify } from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-
 import ImagesApiService from './components/api-service';
 import LoadMoreBtn from './components/load-more-btn';
 import createImageCardMarkup from './components/createImageCardMarkup';
-import * as toggle from './components/darkmode';
-
+import * as darkMode from './components/darkMode.js';
 const refs = {
   searchForm: document.getElementById('search-form'),
   gallery: document.querySelector('.gallery'),
